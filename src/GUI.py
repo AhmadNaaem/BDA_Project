@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report, confusion_matrix, ConfusionMa
 
 def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, original_data):
     root = tk.Tk()
-    root.title("Visa Eligibility Predictor")
+    root.title("Loan Eligibility Predictor")
     root.geometry("400x200")
     root.configure(bg="#e6ffe6")  # Light green background
 

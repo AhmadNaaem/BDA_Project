@@ -5,8 +5,8 @@ from sklearn.ensemble import RandomForestClassifier
 def rfc_model(df, label_encoders):
 
     # Prepare features and target
-    X = df.drop('visa eligible', axis=1)
-    y = df['visa eligible']
+    X = df.drop('loan_status', axis=1)
+    y = df['loan_status']
 
     # Split into train and test sets
     X_train, X_test, y_train, y_test = train_test_split(
