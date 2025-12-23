@@ -51,11 +51,10 @@ def encode(ch_data):
             le = LabelEncoder()
             ch_data[col] = le.fit_transform(ch_data[col])
             label_encoders[col] = le 
-    print(ch_data.head())
     return ch_data, label_encoders
+
 def heatMap(ch_data):
     plt.figure(figsize=(13,8))
     sns.heatmap(ch_data.corr(), annot=True, fmt=".2f", cmap='coolwarm')
     plt.title('Feature Correlation Heatmap')
     plt.show()
-   

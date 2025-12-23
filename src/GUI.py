@@ -4,10 +4,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from ROC_curve import rocc 
 from EDA import graphs, heatMap
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 
-def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, original_data):
+def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, yt, ys_nb, ys_dt, ys_rf,ch_data, original_data):
     root = tk.Tk()
     root.title("Credit Risk Predictor")
     root.geometry("400x200")
@@ -118,6 +119,9 @@ def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, or
 
     eval_btn = tk.Button(root, text="Show Model Evaluation Report", command=show_model_eval, bg="#009933", fg="white")
     eval_btn.pack(pady=10)
+
+    roc_btn = tk.Button(root, text="Show ROC Curve", command=lambda: rocc(yt, ys_nb, ys_dt, ys_rf), bg="#009933", fg="white")
+    roc_btn.pack(pady=10)
 
     pred_btn = tk.Button(root, text="Make Prediction", command=make_prediction, bg="#009933", fg="white")
     pred_btn.pack(pady=10)
