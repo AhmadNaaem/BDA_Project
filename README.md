@@ -48,7 +48,7 @@ python src/main.py
 - Real-time loan default prediction based on borrower profile
 
 ## Technologies Used
-- Python 3.x
+- Python 3.11.9
 - scikit-learn - Machine learning algorithms
 - pandas - Data manipulation and analysis
 - numpy - Numerical computing
