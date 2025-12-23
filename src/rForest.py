@@ -1,6 +1,6 @@
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.metrics import accuracy_score
 
 def rfc_model(df, label_encoders):
 
@@ -19,4 +19,7 @@ def rfc_model(df, label_encoders):
     rf.fit(X_train, y_train)
     y_pred = rf.predict(X_test)
     
-    return y_pred, y_test, X_test, label_encoders, rf
+    y_score = rf.predict_proba(X_test)[:, 1] 
+    acc = accuracy_score(y_test, y_pred)
+    
+    return y_pred, y_test,y_score, X_test, label_encoders, rf,acc

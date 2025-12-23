@@ -7,8 +7,8 @@ import numpy as np
 def tree_model(df, label_encoders):
 
     # Prepare features and target
-    X = df.drop('visa eligible', axis=1)
-    y = df['visa eligible']
+    X = df.drop('loan_status', axis=1)
+    y = df['loan_status']
 
     # Split into train and test sets
     X_train, X_test, y_train, y_test = train_test_split(
@@ -22,4 +22,9 @@ def tree_model(df, label_encoders):
     dt.fit(X_train, y_train)
     y_pred = dt.predict(X_test)
 
-    return y_pred, y_test, X_test, label_encoders, dt
+
+    y_score = dt.predict_proba(X_test)[:, 1] 
+    acc = accuracy_score(y_test, y_pred)
+
+    
+    return y_pred, y_test,y_score, X_test, label_encoders, dt,acc
