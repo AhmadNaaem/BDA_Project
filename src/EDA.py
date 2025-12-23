@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 # import pandas_profiling
 
 def EDA(a):
-    ch_data = a.drop(columns=['cb_person_default_on_file', 'cb_person_cred_hist_length', 'loan_int_rate','person_emp_length','person_age']) #dropping unnecessary columns
+    ch_data = a.drop(columns=['cb_person_default_on_file', 'cb_person_cred_hist_length', 'loan_int_rate','person_emp_length','person_age','']) #dropping unnecessary columns
     ch_data= ch_data.dropna() 
 
 # Detect outliers using IQR for all numeric columns
@@ -45,7 +45,7 @@ def graphs(ch_data):
 
 def encode(ch_data):           
     label_encoders = {}
-    selected_cols = ['cred_history_year','age_group','person_home_ownership','loan_intent','loan_status']
+    selected_cols = ['cred_history_year','age_group','person_home_ownership','loan_intent','loan_status','loan_grade']
     for col in selected_cols:
         if col in ch_data.columns:
             le = LabelEncoder()
