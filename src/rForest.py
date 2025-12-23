@@ -2,24 +2,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-def rfc_model(df, label_encoders):
+def rfc_model(X_train, X_test, y_train, y_test, label_encoders):
+    dt = RandomForestClassifier(random_state=42)
+    dt.fit(X_train, y_train)
 
-    # Prepare features and target
-    X = df.drop('loan_status', axis=1)
-    y = df['loan_status']
-
-    # Split into train and test sets
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.20, random_state=42, stratify=y
-    )
-
-    rf = RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced')
-
-    # Train the model
-    rf.fit(X_train, y_train)
-    y_pred = rf.predict(X_test)
-    
-    y_score = rf.predict_proba(X_test)[:, 1] 
+    y_pred = dt.predict(X_test)
+    y_score = dt.predict_proba(X_test)[:, 1]
     acc = accuracy_score(y_test, y_pred)
-    
-    return y_pred, y_test,y_score, X_test, label_encoders, rf,acc
+
+    return y_pred, y_test, y_score, X_test, label_encoders, dt, acc
