@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report, confusion_matrix, ConfusionMa
 
 def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, original_data):
     root = tk.Tk()
-    root.title("Loan Eligibility Predictor")
+    root.title("Credit Risk Predictor")
     root.geometry("400x200")
     root.configure(bg="#e6ffe6")  # Light green background
 
@@ -59,15 +59,7 @@ def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, or
 
     # --- Make Prediction (as in evalP) ---
     def make_prediction():
-        input_cols = [
-            'gender',
-            'age',  # ask for age, not age_group
-            'parental level of education',
-            'grade',
-            'extracurricular activities',
-            'ielts_group',
-            'financial sponsorship'
-        ]
+        input_cols = X_test.columns.tolist()
 
         form = tk.Toplevel(root)
         form.title("Enter Features for Prediction")
@@ -93,17 +85,14 @@ def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, or
             sample = []
             for col in input_cols:
                 val = entries[col].get()
+                try:
+                    val = float(val)
+                except ValueError:
+                    pass
                 sample.append(val)
             form.destroy()
 
             sample_df = pd.DataFrame([sample], columns=input_cols)
-            # Convert age to age_group
-            if 'age' in sample_df.columns:
-                sample_df['age'] = sample_df['age'].astype(float)
-                sample_df['age_group'] = np.where(sample_df['age'] < 18, 'Below 18',
-                                        np.where(sample_df['age'] < 20, '18-19',
-                                        np.where(sample_df['age'] < 22, '20-21',
-                                        np.where(sample_df['age'] < 24, '22-23', '24 and above'))))
             # Encode categorical columns
             for col in label_encoders:
                 if col in sample_df.columns:
@@ -111,11 +100,11 @@ def launch_gui(accuracy, y_test, y_pred, X_test, label_encoders, rf, ch_data, or
             # Reorder columns to match training data
             sample_df = sample_df[X_test.columns]
             pred = rf.predict(sample_df)
-            if 'visa eligible' in label_encoders:
-                pred_label = label_encoders['visa eligible'].inverse_transform(pred)[0]
+            if 'loan_status' in label_encoders:
+                pred_label = label_encoders['loan_status'].inverse_transform(pred)[0]
             else:
                 pred_label = pred[0]
-            messagebox.showinfo("Prediction", f"Predicted 'visa eligible': {pred_label}")
+            messagebox.showinfo("Prediction", f"Predicted 'loan_status': {pred_label}")
 
         submit_btn = tk.Button(form, text="Submit", command=submit, bg="#009933", fg="white")
         submit_btn.grid(row=len(input_cols), column=0, columnspan=2, pady=10)

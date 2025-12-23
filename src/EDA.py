@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 # import pandas_profiling
 
 def EDA(a):
-    ch_data = a.drop(columns=['cb_person_default_on_file', 'cb_person_cred_hist_length', 'loan_int_rate','person_emp_length','person_age','']) #dropping unnecessary columns
+    ch_data = a.drop(columns=['cb_person_default_on_file', 'cb_person_cred_hist_length', 'loan_int_rate','person_emp_length','person_age','loan_percent_income']) #dropping unnecessary columns
     ch_data= ch_data.dropna() 
 
 # Detect outliers using IQR for all numeric columns

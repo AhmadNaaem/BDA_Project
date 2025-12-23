@@ -8,8 +8,8 @@ def featureEng(df):
     
 
     # Age
-    df['age_group'] = np.where(df['person_age'] < 25, 'Young',
-                    np.where(df['person_age'] < 40, 'Early Career',
-                    np.where(df['person_age'] < 60, 'Stable','Senior')))
+    df['age_group'] = np.where(df['person_age'] < 25, '18-24',
+                    np.where(df['person_age'] < 40, '25-39',
+                    np.where(df['person_age'] < 60, '40-59', '60+')))
     
     return df
